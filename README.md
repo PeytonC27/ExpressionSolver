@@ -29,7 +29,7 @@ DExpression e("sqrt(abs(10-35))");
 e.evaluate();
 ```
 
-And if variables are needed, an `unorderer_map<string, double>` is needed to fill in these variables
+And if variables are needed, an `unordered_map<std::string, double>` is needed to fill in these variables:
 ```cpp
 std::unordered_map<string, double> vars;
 vars["x"] = DExpression::PI;
