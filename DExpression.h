@@ -139,4 +139,7 @@ public:
     /// @brief Grabs all the variables inside this equation
     /// @return 
     std::vector<std::string> getVars();
+
+    static const double PI;
+    static const double E;
 };

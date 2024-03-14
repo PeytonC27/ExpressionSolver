@@ -10,11 +10,14 @@ using std::string;
 using std::cerr;
 using std::endl;
 
+const double DExpression::PI = 3.141592653589793238462643383279502884197169399375105820974944592307816406286;
+const double DExpression::E = 2.718281828459045235360287471352662497757247093699959574966967627724076630353;
+
 const char DExpression::binaryOperator[] = {'+', '-', '*', '/', '^', '%'};
 const string DExpression::unaryOperator[] = {"sqrt", "round", "abs", "sin", "cos", "tan", "asin", "acos", "atan", "rad2deg", "log", "ln"};
 const std::unordered_map<std::string, double> DExpression::predefinedVariables = {
-    {"PI", 3.141592653589793238462643383279502884197169399375105820974944592307816406286 },
-    {"E",  2.718281828459045235360287471352662497757247093699959574966967627724076630353 }
+    {"PI", PI },
+    {"E",  E  }
 };
 
 DExpression::DExpression(const string& expression) {

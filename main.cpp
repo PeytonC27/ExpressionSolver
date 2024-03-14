@@ -1,8 +1,14 @@
 #include "DExpression.h"
 #include <iostream>
+#include <unordered_map>
 
 int main() {
-    DExpression e("1-sqrt(25)");
-    std::cout << e.evaluate() << std::endl;
+    std::unordered_map<std::string, double> vars;
+    vars["x"] = DExpression::PI;
+    vars["m"] = 2;
+    vars["b"] = 2.555;
+
+    DExpression e("m * x + b");
+    std::cout << e.evaluate(vars) << std::endl; 
 }
 
