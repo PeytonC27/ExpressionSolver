@@ -12,7 +12,7 @@
 ///
 /// @date March 13, 2024
 ///
-class Expression {
+class DExpression {
 private:
     static const char binaryOperator[];
     static const std::string unaryOperator[];
@@ -114,7 +114,7 @@ public:
     /// @param expression the expression to parse
     /// @throw if the expression is invalid, an "invalid_argument" exception is thrown
     ///
-    Expression(const std::string& expression);
+    DExpression(const std::string& expression);
 
     ///
     /// @brief Solves the expression with a variable map

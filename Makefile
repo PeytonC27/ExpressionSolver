@@ -1,9 +1,8 @@
-
-test: main.o expression.o
-	g++ -o test main.o expression.o -Wall
+test: DExpression.o main.o
+	g++ -o test DExpression.o main.o -Wall
 
 main.o: main.cpp
 	g++ -c main.cpp -Wall
 
-expression.o: expression.cpp
-	g++ -c expression.cpp -Wall
+DExpression.o: DExpression.cpp
+	g++ -c DExpression.cpp -Wall

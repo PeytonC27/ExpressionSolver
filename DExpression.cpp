@@ -1,4 +1,4 @@
-#include "expression.h"
+#include "DExpression.h"
 #include <stack>
 #include <string>
 #include <cmath>
@@ -10,14 +10,14 @@ using std::string;
 using std::cerr;
 using std::endl;
 
-const char Expression::binaryOperator[] = {'+', '-', '*', '/', '^', '%'};
-const string Expression::unaryOperator[] = {"sqrt", "round", "abs", "sin", "cos", "tan", "asin", "acos", "atan", "rad2deg", "log", "ln"};
-const std::unordered_map<std::string, double> Expression::predefinedVariables = {
+const char DExpression::binaryOperator[] = {'+', '-', '*', '/', '^', '%'};
+const string DExpression::unaryOperator[] = {"sqrt", "round", "abs", "sin", "cos", "tan", "asin", "acos", "atan", "rad2deg", "log", "ln"};
+const std::unordered_map<std::string, double> DExpression::predefinedVariables = {
     {"PI", 3.141592653589793238462643383279502884197169399375105820974944592307816406286 },
     {"E",  2.718281828459045235360287471352662497757247093699959574966967627724076630353 }
 };
 
-Expression::Expression(const string& expression) {
+DExpression::DExpression(const string& expression) {
 
     // evaluate the expression to make sure it's actually runnable, otherwise it should throw an error
     if (!checkValidity(expression))
@@ -26,12 +26,12 @@ Expression::Expression(const string& expression) {
     this->expression = expression;
 }
 
-double Expression::evaluate() {
+double DExpression::evaluate() {
     std::unordered_map<string, double> variableMap;
     return evaluate(variableMap);
 }
 
-double Expression::evaluate(const std::unordered_map<string, double>& variableMap) {
+double DExpression::evaluate(const std::unordered_map<string, double>& variableMap) {
     size_t i;
     std::stack<double> values;
     std::stack<char> ops;
@@ -88,7 +88,7 @@ double Expression::evaluate(const std::unordered_map<string, double>& variableMa
                 }
 
                 // evaluate the expression inside the map
-                double res = Expression(buffer).evaluate(variableMap);
+                double res = DExpression(buffer).evaluate(variableMap);
 
                 values.push(negate * applySpecialOp(
                     res,
@@ -162,7 +162,7 @@ double Expression::evaluate(const std::unordered_map<string, double>& variableMa
     return values.top();
 }
 
-bool Expression::checkValidity(const string& expression) {
+bool DExpression::checkValidity(const string& expression) {
     size_t i;
     string buffer = "";
     string tokens = cleanTokens(expression);
@@ -272,7 +272,7 @@ bool Expression::checkValidity(const string& expression) {
     return true;
 }
 
-int Expression::precedence(char op) {
+int DExpression::precedence(char op) {
     if (op == '+' || op == '-')
         return 1;
     else if (op == '*' || op == '/' || op == '%')
@@ -282,11 +282,11 @@ int Expression::precedence(char op) {
     return 0;
 }
 
-bool Expression::hasPrecedence(char o1, char o2) {
+bool DExpression::hasPrecedence(char o1, char o2) {
     return precedence(o1) <= precedence(o2);
 }
 
-double Expression::applyOp(double b, double a, char op) {
+double DExpression::applyOp(double b, double a, char op) {
     switch(op) {
         case '+': return a + b;
         case '-': return a - b;
@@ -298,7 +298,7 @@ double Expression::applyOp(double b, double a, char op) {
     }
 }
 
-double Expression::applySpecialOp(double value, const string& op) {
+double DExpression::applySpecialOp(double value, const string& op) {
     if (op == "sqrt") {
         return std::sqrt(value);
     }
@@ -341,21 +341,21 @@ double Expression::applySpecialOp(double value, const string& op) {
         return std::numeric_limits<double>::min();
 }
 
-bool Expression::isOp(char op) {
+bool DExpression::isOp(char op) {
     for (char c : binaryOperator)
         if (op == c)
             return true;
     return false;
 }
 
-bool Expression::isSpecialOp(const string& op) {
+bool DExpression::isSpecialOp(const string& op) {
     for (string s : unaryOperator)
         if (op == s)
             return true;
     return false;
 }
 
-string Expression::cleanTokens(const string& tokens) {
+string DExpression::cleanTokens(const string& tokens) {
     string result = "";
     for (size_t i = 0; i < tokens.length(); i++)
         if (tokens[i] != ' ')
@@ -363,7 +363,7 @@ string Expression::cleanTokens(const string& tokens) {
     return result;
 }
 
-std::vector<string> Expression::getVars() {
+std::vector<string> DExpression::getVars() {
     string tokens = cleanTokens(expression);
     std::vector<string> vars;
 
@@ -387,7 +387,7 @@ std::vector<string> Expression::getVars() {
     return vars;
 }
 
-int Expression::negateCheck(string tokens, int index, std::stack<char>& opstack) {
+int DExpression::negateCheck(string tokens, int index, std::stack<char>& opstack) {
     if ((index == 1 && tokens[index-1] == '-') || (index > 1 && tokens[index-1] == '-' && isOp(tokens[index-2]))) {
         opstack.pop();
         return -1;
@@ -395,9 +395,9 @@ int Expression::negateCheck(string tokens, int index, std::stack<char>& opstack)
     return 1;
 }
 
-string Expression::toString() { return expression; }
+string DExpression::toString() { return expression; }
 
-bool Expression::isValidVarName(const std::string& s) {
+bool DExpression::isValidVarName(const std::string& s) {
     if (s.size() < 1)
         return false;
 
@@ -417,7 +417,7 @@ bool Expression::isValidVarName(const std::string& s) {
     return true;
 }
 
-bool Expression::isValidNumber(const std::string& s) {
+bool DExpression::isValidNumber(const std::string& s) {
     int dotCount = 0;
 
     for (size_t i = 0; i < s.size(); i++) {
