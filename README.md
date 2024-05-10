@@ -14,10 +14,12 @@ Trig operations:
 - cos(x) and acos(x)
 - tan(x) and atan(x)
 - rad2deg(x)
+
 Logarithms
 - ln(x)
 - log(x)
-And some other useful functions
+  
+And some other useful functions  
 - abs(x)
 - round(x)
 - sqrt(x)
